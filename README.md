@@ -52,3 +52,16 @@ This code can be used as mentioned to either upscale or downscale a texture with
 
 Here, I added a toon shader, a diffuse shader, and an outline effect to the shark object. First, there's the standard toon shader but instead of just toon shading, this also adds a standard diffuse effect. This way, you can have a mix of soft and hard shadows creating a unique multi media drawn effect, like it was shaded in both graphite as well as marker. The way that this was achieved was by using the standard toon shading effect, but also adding the functionality for diffuse as well. So there's both the step shading effect where it only takes certain levels of light and assigns them colours based on the texture given, but also adds a normal shadow pass using diffuse shading. The outline effect makes a larger iteration of the model outside on a transparent layer giving it an outlined effect without covering up the actual model itself. 
 
+the code provided colours the shadows to be whatever colour you set them to. It does this by taking the standard shadow that would be applied to the object, and adds whatever colour you've set it to on top. 
+
+ c.rgb += _ShadowColor.xyz * (1.0 - atten);  c.a = s.Alpha; 
+ return c; 
+ } 
+ void surf(Input IN, inout SurfaceOutput o) {  half4 c = tex2D(_MainTex, IN.uv_MainTex) *  _Color; 
+ o.Albedo = c.rgb; 
+ o.Alpha = c.a; 
+ } 
+
+
+here you can see it doing that exact thing. It takes the surface output and multiplies it by the colour that we've chosen. In this way we can change the entire mood of our scenes. By using brightly coloured shadows we can make things look lighter and more whimsical rather than realistic, it also drastically changes the effect a shadow can have. For example, by making a shadow bright pink it can give the impression that an object is being backlit by some neon lights, perhaps a night club setting. 
+
