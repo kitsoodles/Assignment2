@@ -22,3 +22,33 @@ Here, I implimented square waves along with a toon shader on these waves. To ach
 
 The way that this differs from the regular toon shading code is that it had to be combined with the wave code so that both may exist at the same time without affecting the actual waves themselves. This provides both the movement as well as the toon shader. 
 
+
+
+The code provided is for mipmapping a texture to either increase or decrease it's quality. The following line:
+for (; i < iterations; i++) { 
+width /= 2; 
+height /= 2; 
+currentDestination = textures[i] = 
+RenderTexture.GetTemporary(width, height, 0,  
+format); 
+if (height < 2) { 
+break; 
+} 
+currentDestination = 
+RenderTexture.GetTemporary(width, height, 0,  
+format); 
+
+takes the texture and downsamples it to make ti smaller, but can also be used to upscale it to make it larger if needed. Then, the texture is iterated as many times as necessary to maintain the size of the original image even after the scaling 
+
+for (; i < iterations; i++) { 
+Graphics.Blit(currentSource,  
+currentDestination); 
+
+
+This code can be used as mentioned to either upscale or downscale a texture without losing quality so that a small texture can cover a large amount of space without deteriorating, or to use a large texture on a smaller area at a higher quality.
+
+
+![image](https://user-images.githubusercontent.com/98484257/228594673-b298c84c-a04a-480d-a869-e17f2695fc5a.png)
+
+Here, I added a toon shader, a diffuse shader, and an outline effect to the shark object. First, there's the standard toon shader but instead of just toon shading, this also adds a standard diffuse effect. This way, you can have a mix of soft and hard shadows creating a unique multi media drawn effect, like it was shaded in both graphite as well as marker. The way that this was achieved was by using the standard toon shading effect, but also adding the functionality for diffuse as well. So there's both the step shading effect where it only takes certain levels of light and assigns them colours based on the texture given, but also adds a normal shadow pass using diffuse shading. The outline effect makes a larger iteration of the model outside on a transparent layer giving it an outlined effect without covering up the actual model itself. 
+
