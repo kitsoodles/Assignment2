@@ -16,3 +16,9 @@ meanwhile, deferred rendering renders the object first, then adds the lighting t
 
 this allows optimal performance as well as avoiding shader errors
 
+![image](https://user-images.githubusercontent.com/98484257/228589192-488d4ea2-d959-4b7e-9de3-0b99bfe0f2e2.png)
+
+Here, I implimented square waves along with a toon shader on these waves. To achieve this, I took the triangular wave and set it to have a height of +1 whenever the number produced by _WaveHeight was greater than or equal to zero, and set to -1 whenever it's less than zero. This way, the wave will form a square pattern instead of a triangular one, at least in theory. For some reason, this occasionally produces the correct square waves while also producing some triangular waves at random. My theory is that the if statements aren't able to keep up with the calculation above it, thus only producing the intended effect on some iterations of the waves. Nonetheless, I do believe my approach to be correct. 
+
+The way that this differs from the regular toon shading code is that it had to be combined with the wave code so that both may exist at the same time without affecting the actual waves themselves. This provides both the movement as well as the toon shader. 
+
